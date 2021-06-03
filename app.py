@@ -29,9 +29,9 @@ def index():
 @app.route('/predict', methods=['POST'])
 def prediction():
     # load predictor models
-    lr_model = joblib.load('capstone_lr_model.pkl')
-    rf_model = joblib.load('capstone_rf_model.pkl')
-    xgb_model = pkl.load(open('xgboost-model', 'rb'))
+    lr_model = joblib.load('models/capstone_lr_model.pkl')
+    rf_model = joblib.load('models/capstone_rf_model.pkl')
+    xgb_model = pkl.load(open('models/xgboost-model', 'rb'))
     
     # prepare input data
     content = request.json
@@ -47,7 +47,7 @@ def prediction():
     rf_predict = rf_model.predict(payload)
     xgb_predict = xgb_model.predict(xgmat)
     
-    target_vals = pd.read_csv('test_data.csv')
+    target_vals = pd.read_csv('data/test_data.csv')
     
     lr_rmse, lr_accuracy = evaluate(target_vals['target'], lr_predict)
     rf_rmse, rf_accuracy = evaluate(target_vals['target'], rf_predict)
